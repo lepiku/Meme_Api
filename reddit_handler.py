@@ -28,7 +28,11 @@ def get_posts(sub, limit):
 
     result = [{"title": submission.title,
                "url": submission.url,
-               "link": submission.shortlink}
+               "link": submission.shortlink,
+               "author": submission.author.name,
+               "score": submission.score,
+               "created_at": submission.created,
+               }
               for submission in submissions]
 
     return result

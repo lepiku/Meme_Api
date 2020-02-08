@@ -33,12 +33,8 @@ def one_post():
     while not is_img_link(r["url"]):
         r = random.choice(re)
 
-    return jsonify({
-        'title': r["title"],
-        'url': r["url"],
-        'postLink': r["link"],
-        'subreddit': sub
-    })
+    r['subreddit'] = sub
+    return jsonify(r)
 
 
 @app.route('/gimme/<int:count>')
@@ -71,14 +67,8 @@ def multiple_posts(count):
             break
 
         if is_img_link(post['url']):
-            temp = {
-                'title': post["title"],
-                'url': post["url"],
-                'postLink': post["link"],
-                'subreddit': sub
-            }
-
-            memes.append(temp)
+            post['subreddit'] = sub
+            memes.append(post)
 
     return jsonify({
         'memes': memes,
@@ -109,12 +99,8 @@ def one_post_from_sub(subreddit):
     while not is_img_link(r["url"]):
         r = random.choice(re)
 
-    return jsonify({
-        'title': r["title"],
-        'url': r["url"],
-        'postLink': r["link"],
-        'subreddit': subreddit
-    })
+    r["subreddit"] = subreddit
+    return jsonify(r)
 
 
 @app.route('/gimme/<subreddit>/<int:count>')
@@ -151,13 +137,7 @@ def multiple_posts_from_sub(subreddit, count):
             break
 
         if is_img_link(post['url']):
-            temp = {
-                'title': post["title"],
-                'url': post["url"],
-                'postLink': post["link"]
-            }
-
-            memes.append(temp)
+            memes.append(post)
 
     return jsonify({
         'memes': memes,
